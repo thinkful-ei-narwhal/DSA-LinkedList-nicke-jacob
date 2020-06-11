@@ -138,7 +138,6 @@ class LinkedList {
 
   thirdFromTheEnd() {
     let node = this.head;
-    let secondLast = null;
     let thirdLast = null;
 
     while(node.next !== null && node.next.next !== null) {
@@ -147,6 +146,28 @@ class LinkedList {
     }
     return thirdLast;
   }
+
+  findMiddle() {
+    let node = this.head;
+    let counter = 0;
+    let middleNode = null;
+    while(node !== null) {
+      counter++;
+      node = node.next;
+    }
+    node = this.head;
+    for(let i = 0; i < counter/2; i++) {
+      middleNode = node;
+      node = node.next;
+    }
+    return middleNode;
+  }
+  // cycleCheck() {
+  //   let node = this.head;
+  //   let otherNode = this.head;
+
+  //   while()
+  // }
 
 }
 function reverse(SSL) {
@@ -174,7 +195,12 @@ function main() {
   SSL.insertLast(4);
   SSL.insertLast(5);
   SSL.insertLast(6);
-  console.log(SSL.thirdFromTheEnd());
+  SSL.insertLast(7);
+  SSL.insertLast(8);
+  SSL.insertLast(9);
+  SSL.insertLast(10);
+
+  console.log(SSL.findMiddle());
   // console.log("TESTING", SSL.printAllNodes());
 }
 
