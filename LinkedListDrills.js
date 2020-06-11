@@ -1,3 +1,4 @@
+'use strict';
 class _Node {
   constructor(value, next) {
     this.value = value;
@@ -32,6 +33,11 @@ class LinkedList {
     let node = this.head;
     let previousNode = null;
     while (node.value !== item) {
+      if(node.next === null) {
+        //if value is not in the linked list
+        console.log('Sorry try another value');
+        return null;
+      }
       previousNode = node;
       node = node.next;
     }
@@ -51,33 +57,50 @@ class LinkedList {
     return null;
   }
 
+  insertBefore(item, key) {
+    let node = this.head;
+    let prevNode = null;
+    while(node.value !== key) {
+      prevNode = node;
+      node = node.next;
+    }
+    prevNode.next = new _Node(item, node);
+  }
+
+  insertAfter(item, key) {
+    let node = this.head;
+    while(node.value !== key) {
+      node = node.next;
+    }
+    node.next = new _Node(item, node.next);
+  }
+
+  insertAt(item, index) {
+    let node = this.head;
+    for(let i = 1; i < index; i++) {
+      node = node.next;
+    }
+    node.next = new _Node(item, node.next);
+  }
+
   printAllNodes() {
     let node = this.head;
-    console.log("First node: ", this.head);
+    console.log('First node: ', this.head);
     while (node !== null) {
-      console.log("Node next= ", node.next);
+      console.log('Node next= ', node.next);
       node = node.next;
     }
   }
 }
 
 function main() {
-  const linky = new LinkedList();
-  // linky.insertFirst("test");
-  // linky.insertFirst("brain");
-  // linky.insertFirst("buns");
-  // linky.insertFirst("lovehandles");
+  const SSL = new LinkedList();
+  SSL.insertFirst('Appolo');
+  SSL.insertLast('Boomer');
+  SSL.insertAt('Test', 1);
+  SSL.printAllNodes();
 
-  // linky.insertLast("test");
-  // linky.insertLast("brain");
-  // linky.insertLast("buns");
-  // linky.insertLast("lovehandles");
 
-  // linky.remove("buns");
-
-  // console.log("TESTING", linky.find("buns"));
-
-  // linky.printAllNodes();
 }
 
 main();
