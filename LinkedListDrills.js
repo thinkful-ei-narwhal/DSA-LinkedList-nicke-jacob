@@ -1,8 +1,91 @@
-'use strict';
 class _Node {
   constructor(value, next) {
     this.value = value;
     this.next = next;
+  }
+}
+
+class _DLLNode {
+  constructor(value, next, back) {
+    this.value = value;
+    this.next = next;
+    this.back = back;
+  }
+}
+
+class DoublyLinkedList {
+  constructor() {
+    this.head = null;
+  }
+  insertFirst(item) {
+    this.head = new _DLLNode(item, this.head, null);
+  }
+
+  insertLast(item) {
+    if (this.head === null) {
+      this.insertFirst(item);
+      return;
+    }
+    let node = this.head;
+    while (node.next !== null) {
+      node = node.next;
+    }
+    node.next = new _DLLNode(item, null, node);
+  }
+
+  insertBefore(item, key) {
+    let node = this.head;
+    let prevNode = null;
+    while (node.value !== key) {
+      prevNode = node;
+      node = node.next;
+    }
+    prevNode.next = new _DLLNode(item, prevNode.next, prevNode);
+  }
+
+  insertAfter(item, key) {
+    let node = this.head;
+    while (node.value !== key) {
+      node = node.next;
+    }
+    node.next = new _DLLNode(item, node.next, node.back);
+  }
+
+  insertAt(item, index) {
+    let node = this.head;
+    for (let i = 1; i < index; i++) {
+      node = node.next;
+    }
+    node.next = new _DLLNode(item, node.next, node.back);
+  }
+
+  remove(item) {
+    let node = this.head;
+    let previousNode = null;
+    while (node.value !== item) {
+      if (node.next === null) {
+        //if value is not in the linked list
+        console.log("Sorry try another value");
+        return null;
+      }
+      previousNode = node;
+      node = node.next;
+    }
+    previousNode.next = node.next;
+    node.next.back = previousNode;
+  }
+
+  find(item) {
+    let node = this.head;
+    while (node.value !== item) {
+      node = node.next;
+
+      if (node.value === item) {
+        return node;
+      }
+    }
+
+    return null;
   }
 }
 
@@ -21,12 +104,12 @@ class LinkedList {
       return;
     }
 
-    let lastNode = this.head;
-    while (lastNode.next !== null) {
-      lastNode = lastNode.next;
+    let node = this.head;
+    while (node.next !== null) {
+      node = node.next;
     }
 
-    lastNode.next = new _Node(item, null);
+    node.next = new _Node(item, null);
   }
 
   remove(item) {
@@ -35,7 +118,7 @@ class LinkedList {
     while (node.value !== item) {
       if (node.next === null) {
         //if value is not in the linked list
-        console.log('Sorry try another value');
+        console.log("Sorry try another value");
         return null;
       }
       previousNode = node;
@@ -85,9 +168,9 @@ class LinkedList {
 
   printAllNodes() {
     let node = this.head;
-    console.log('First node: ', this.head);
+    console.log("First node: ", this.head);
     while (node !== null) {
-      console.log('Node next= ', node.next);
+      console.log("Node next= ", node.next);
       node = node.next;
     }
   }
@@ -125,11 +208,11 @@ class LinkedList {
   }
 
   recursiveReverse(node = this.head, prevNode = null) {
-    if(!node) {
+    if (!node) {
       this.head = prevNode;
       return node;
     }
-    
+
     const nextNode = node.next;
     node.next = prevNode;
     prevNode = node;
@@ -140,7 +223,7 @@ class LinkedList {
     let node = this.head;
     let thirdLast = null;
 
-    while(node.next !== null && node.next.next !== null) {
+    while (node.next !== null && node.next.next !== null) {
       thirdLast = node;
       node = node.next;
     }
@@ -169,23 +252,35 @@ class LinkedList {
   //   while()
   // }
 
+  middleOfList(node = this.head, count = 1) {
+    if (!node.next) {
+      return count / 2;
+    }
+
+    let midCheck = this.middleOfList(node.next, count + 1);
+    if (count === midCheck) {
+      return count;
+    } else {
+      return midCheck;
+    }
+  }
 }
+
 function reverse(SSL) {
   let node = SSL.head;
   let prevNode = null;
   let nextNode = null;
-  while(node) {
+  while (node) {
     nextNode = node.next;
     node.next = prevNode;
     prevNode = node;
-    if(!nextNode) {
+    if (!nextNode) {
       break;
     }
   }
   SSL.head = node;
   return SSL;
 }
-
 
 function main() {
   const SSL = new LinkedList();
@@ -201,6 +296,10 @@ function main() {
   SSL.insertLast(10);
 
   console.log(SSL.findMiddle());
+
+  console.log("TESTING", SSL.middleOfList());
+
+  // console.log(SSL.thirdFromTheEnd());
   // console.log("TESTING", SSL.printAllNodes());
 }
 
