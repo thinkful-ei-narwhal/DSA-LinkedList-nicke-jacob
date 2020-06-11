@@ -1,3 +1,4 @@
+'use strict';
 class _Node {
   constructor(value, next) {
     this.value = value;
@@ -34,7 +35,7 @@ class LinkedList {
     while (node.value !== item) {
       if (node.next === null) {
         //if value is not in the linked list
-        console.log("Sorry try another value");
+        console.log('Sorry try another value');
         return null;
       }
       previousNode = node;
@@ -84,9 +85,9 @@ class LinkedList {
 
   printAllNodes() {
     let node = this.head;
-    console.log("First node: ", this.head);
+    console.log('First node: ', this.head);
     while (node !== null) {
-      console.log("Node next= ", node.next);
+      console.log('Node next= ', node.next);
       node = node.next;
     }
   }
@@ -122,14 +123,59 @@ class LinkedList {
     }
     return node;
   }
+
+  recursiveReverse(node = this.head, prevNode = null) {
+    if(!node) {
+      this.head = prevNode;
+      return node;
+    }
+    
+    const nextNode = node.next;
+    node.next = prevNode;
+    prevNode = node;
+    this.recursiveReverse(nextNode, prevNode);
+  }
+
+  thirdFromTheEnd() {
+    let node = this.head;
+    let secondLast = null;
+    let thirdLast = null;
+
+    while(node.next !== null && node.next.next !== null) {
+      thirdLast = node;
+      node = node.next;
+    }
+    return thirdLast;
+  }
+
 }
+function reverse(SSL) {
+  let node = SSL.head;
+  let prevNode = null;
+  let nextNode = null;
+  while(node) {
+    nextNode = node.next;
+    node.next = prevNode;
+    prevNode = node;
+    if(!nextNode) {
+      break;
+    }
+  }
+  SSL.head = node;
+  return SSL;
+}
+
 
 function main() {
   const SSL = new LinkedList();
-  SSL.insertFirst("Appolo");
-  SSL.insertLast("Boomer");
-  SSL.insertAt("Test", 1);
-  console.log("TESTING", SSL.findLast());
+  SSL.insertFirst(1);
+  SSL.insertLast(2);
+  SSL.insertLast(3);
+  SSL.insertLast(4);
+  SSL.insertLast(5);
+  SSL.insertLast(6);
+  console.log(SSL.thirdFromTheEnd());
+  // console.log("TESTING", SSL.printAllNodes());
 }
 
 main();
