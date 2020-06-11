@@ -87,6 +87,14 @@ class DoublyLinkedList {
 
     return null;
   }
+
+  printAllNodes() {
+    let node = this.head;
+    while (node !== null) {
+      console.log("Node: ", node);
+      node = node.next;
+    }
+  }
 }
 
 class LinkedList {
@@ -234,12 +242,12 @@ class LinkedList {
     let node = this.head;
     let counter = 0;
     let middleNode = null;
-    while(node !== null) {
+    while (node !== null) {
       counter++;
       node = node.next;
     }
     node = this.head;
-    for(let i = 0; i < counter/2; i++) {
+    for (let i = 0; i < counter / 2; i++) {
       middleNode = node;
       node = node.next;
     }
@@ -283,21 +291,20 @@ function reverse(SSL) {
 }
 
 function main() {
-  const SSL = new LinkedList();
+  const SSL = new DoublyLinkedList();
   SSL.insertFirst(1);
   SSL.insertLast(2);
-  SSL.insertLast(3);
-  SSL.insertLast(4);
-  SSL.insertLast(5);
-  SSL.insertLast(6);
-  SSL.insertLast(7);
-  SSL.insertLast(8);
-  SSL.insertLast(9);
-  SSL.insertLast(10);
+  SSL.insertBefore(3, 2);
+  SSL.insertAfter(1.5, 1);
+  SSL.insertAt(10000, 2);
+  SSL.printAllNodes();
 
-  console.log(SSL.findMiddle());
+  // SSL.remove(;
+  // SSL.find(7);
 
-  console.log("TESTING", SSL.middleOfList());
+  // console.log(SSL.findMiddle());
+
+  // console.log("TESTING", SSL.middleOfList());
 
   // console.log(SSL.thirdFromTheEnd());
   // console.log("TESTING", SSL.printAllNodes());
